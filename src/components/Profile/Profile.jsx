@@ -9,7 +9,10 @@ export const Profile = (props) =>{
     return(
         <div>
           <ProfileInfo/>
-          <MyPost postdata={props.state.postData} addPost={props.addPost}/>
+          <MyPost postdata={props.profilePage.postData} 
+                  newPostText={props.profilePage.newPostText}
+                  addPost={props.addPost}
+                  updateNewPostText={props.updateNewPostText} />
       </div>
     )
 }
