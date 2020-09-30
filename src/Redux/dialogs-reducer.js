@@ -4,7 +4,6 @@ const UPDATE_NEW_MESSAGE_TEXT = "UPDATE-NEW-MESSAGE-TEXT";
 const dialogsReducer = (state, action) => {
   switch (action.type) {
     case ADD_MESSAGE:
-        debugger
       let newPost = {
         id: 8,
         message: state.newMessageText,

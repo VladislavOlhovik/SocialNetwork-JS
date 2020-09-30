@@ -4,13 +4,12 @@ const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const profileReducer = (state, action) => {
   switch (action.type) {
     case ADD_POST:
-        debugger
       let newPost = {
         id: 5,
         message: state.newPostText,
         likeCounts: 0,
       };
-      state.postData.push(newPost);
+      state.postData.unshift(newPost);
       state.newPostText = "";
       return state;
     case UPDATE_NEW_POST_TEXT:
