@@ -12,7 +12,7 @@ import News from './components/News/News';
 
 
 
-const App = (props) => {
+const App = () => {
   return (    
       <div className='app-wrapper'>
         <Header />
