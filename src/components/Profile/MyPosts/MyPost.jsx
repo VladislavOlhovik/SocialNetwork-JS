@@ -3,7 +3,7 @@ import s from './MyPost.module.css';
 import { Post } from './Post/Post';
 
 export const MyPost = (props) => {
-  let postElements=props.postdata.map(el => <Post message={el.message} likeCounts={el.likeCounts} />)
+  let postElements=props.postdata.map(el => <Post key={el.id} message={el.message} likeCounts={el.likeCounts} />)
   
   let addPost=() => {
     props.addPost()
