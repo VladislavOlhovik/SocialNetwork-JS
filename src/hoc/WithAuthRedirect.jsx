@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
     }
 }
 const mapDispatchToProps = () => {
-    
+    return ({})
 }
 export const WithAuthRedirect = (Component) => {
     
