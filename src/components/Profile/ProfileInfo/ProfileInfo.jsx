@@ -2,6 +2,7 @@ import React from 'react';
 import Preloader from '../../common/preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import userPhoto from '../../../assets/images/user.png'
+import ProfileStatus from './ProfileStatus';
 
 
 
@@ -11,9 +12,9 @@ export const ProfileInfo = (props) => {
   }
   return (
     <div>
-      <div>
+      {/* <div>
         <img className={s.img} src="https://gadgetmedics.com/wp-content/uploads/2020/01/illustration-geiranger.jpg" alt='img' />
-      </div>
+      </div> */}
       <div className={s.descriptionBlock}>
         <div className={s.wrapper}>
           <span>
@@ -28,6 +29,7 @@ export const ProfileInfo = (props) => {
             </span>
           </span>
         </div>
+        <ProfileStatus status = {'Hello my friends'}/>
       </div>
     </div>
   )
