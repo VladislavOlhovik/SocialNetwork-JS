@@ -28,11 +28,9 @@ const LogiReduxForm = reduxForm({form: 'login'})(LoginForm)
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-        debugger
         props.loginUser(formData)
-        console.log(formData)
     }
-    if(props.isAuth) return <Redirect to={'/profile/12338'}/>
+    if(props.isAuth) return <Redirect to={'/profile'}/>
     return <div>
         <h1>Login</h1>
         <LogiReduxForm onSubmit={onSubmit}/>
