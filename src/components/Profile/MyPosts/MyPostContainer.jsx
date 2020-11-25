@@ -4,7 +4,6 @@ import { MyPost } from './MyPost';
 
 const mapStateToProps = (state)=>{
   return{
-    newPostText: state.profilePage.newPostText,
     postdata: state.profilePage.postData
   }
 }
