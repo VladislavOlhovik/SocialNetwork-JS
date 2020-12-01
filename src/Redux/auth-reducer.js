@@ -1,7 +1,7 @@
 import { stopSubmit } from "redux-form";
 import { authAPI } from "../api/api";
 
-const SET_USERS_DATA = "SET_USERS";
+const SET_USERS_DATA = "SET_USERS_DATA";
 
 
 const initialState = {
@@ -44,7 +44,6 @@ export const loginUser = (formData) => (dispatch) => {
 };
 export const logoutUser = () => (dispatch) => {
   authAPI.logout().then((data) => {
-    debugger
     if (data.data.resultCode === 0) {
       dispatch(setAuthUserData({
         id:null,
