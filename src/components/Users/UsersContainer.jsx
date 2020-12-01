@@ -4,7 +4,6 @@ import { follow, getUsersCurrentPage, unFollow, getUsers } from '../../Redux/use
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader'
 import { compose } from 'redux';
-import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
 
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -54,5 +53,4 @@ export default compose(
         getUsers,
         getUsersCurrentPage,
     }),
-    WithAuthRedirect
 )(UsersContainer)
