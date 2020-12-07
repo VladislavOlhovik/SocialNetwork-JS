@@ -2,7 +2,7 @@ import React from 'react';
 import Preloader from '../../common/preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import userPhoto from '../../../assets/images/user.png'
-import ProfileStatus from './ProfileStatus';
+import ProfileStatusWithHook from './ProfileStatusWithHook';
 
 
 
@@ -29,7 +29,7 @@ export const ProfileInfo = (props) => {
             </span>
           </span>
         </div>
-        <ProfileStatus status = {props.status} updateUserStatus={props.updateUserStatus}/>
+        <ProfileStatusWithHook status = {props.status} updateUserStatus={props.updateUserStatus}/>
       </div>
     </div>
   )

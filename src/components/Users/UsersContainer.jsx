@@ -14,6 +14,7 @@ class UsersContainer extends React.Component {
         this.props.getUsersCurrentPage(el, this.props.pageSize)
     }
     render() {
+        console.log('USER');
         return (
             <>
                 {this.props.isFetching ?
