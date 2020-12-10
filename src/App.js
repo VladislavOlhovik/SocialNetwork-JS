@@ -14,6 +14,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { initializeApp } from './Redux/app-reducer';
 import Preloader from './components/common/preloader/Preloader';
+import Chat from './components/Chat/Chat';
 
 
 
@@ -33,6 +34,7 @@ class App extends React.Component {
         <div className="app-wrapper-content">
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
           <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/chat" render={() => <Chat />} />
           <Route path="/users" render={() => <UsersContainer />} />
           <Route path="/news" component={News} />
           <Route path="/music" component={Music} />
