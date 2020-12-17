@@ -20,7 +20,7 @@ const initialState = {
   ],
 }
 
-const dialogsReducer = (state = initialState, action) => {
+export const dialogsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MESSAGE:
       let newPost = {id: v1(),message: action.newMessageBody};
