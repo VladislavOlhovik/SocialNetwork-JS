@@ -14,7 +14,6 @@ class UsersContainer extends React.Component {
         this.props.getUsersCurrentPage(el, this.props.pageSize)
     }
     render() {
-        console.log('USER');
         return (
             <>
                 {this.props.isFetching ?
@@ -32,18 +31,6 @@ class UsersContainer extends React.Component {
         )
     }
 }
-
-// const mapStateToProps = (state) => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress: state.usersPage.followingInProgress,
-//     }
-// }
-
 
 const mapStateToProps = (state) => {
     return {

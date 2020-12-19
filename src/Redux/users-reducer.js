@@ -1,12 +1,13 @@
 import { followAPI, usersAPI } from "../api/api";
+import { updateObjectInArray } from "../utils/object-helpers";
 
-const FOLLOW = "FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
-const SET_USERS = "SET_USERS";
-const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
-const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT"
-const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
-const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS"
+const FOLLOW = "users/FOLLOW";
+const UNFOLLOW = "users/UNFOLLOW";
+const SET_USERS = "users/SET_USERS";
+const SET_CURRENT_PAGE = "users/SET_CURRENT_PAGE"
+const SET_TOTAL_USERS_COUNT = "users/SET_TOTAL_USERS_COUNT"
+const TOGGLE_IS_FETCHING = "users/TOGGLE_IS_FETCHING"
+const TOGGLE_IS_FOLLOWING_PROGRESS = "users/TOGGLE_IS_FOLLOWING_PROGRESS"
 
 const initialState = {
   users: [],
@@ -22,23 +23,13 @@ const usersReducer = (state=initialState, action) => {
     case FOLLOW:
       return {
         ...state,
-        users: state.users.map(el=>{
-          if(el.id===action.userId){
-            return {...el,followed:true}
-          }
-          return el
-        })
-      }
+        users: updateObjectInArray( state.users, 'id', action.userId, {followed: true} )
+      };
     case UNFOLLOW:
       return {
         ...state,
-        users: state.users.map(el=>{
-          if(el.id===action.userId){
-            return {...el,followed:false}
-          }
-          return el
-        })
-      }
+        users: updateObjectInArray( state.users, 'id', action.userId, {followed: false} )
+      };
     case SET_USERS:
       return {...state, users:action.users} 
     case SET_CURRENT_PAGE:
@@ -67,40 +58,36 @@ export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_C
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});
 export const toggleFolowingProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, payload:{isFetching,userId}});
 
-export const requestUsers = (currentPage, pageSize) => (dispatch) => {
-  debugger;
+export const requestUsers = (currentPage, pageSize) => async (dispatch) => {
   dispatch(toggleIsFetching(true));
-  usersAPI.getUsers(currentPage, pageSize).then((data) => {
-    dispatch(setUsers(data.items));
-    dispatch(setTotalUsersCount(data.totalCount));
-    dispatch(toggleIsFetching(false));
-  });
+  let data = await usersAPI.getUsers(currentPage, pageSize)
+  dispatch(setUsers(data.items));
+  dispatch(setTotalUsersCount(data.totalCount));
+  dispatch(toggleIsFetching(false));
 };
-export const getUsersCurrentPage = (currentPage, pageSize) => (dispatch) => {
+export const getUsersCurrentPage = (currentPage, pageSize) => async (dispatch) => {
   dispatch(setCurrentPage(currentPage));
   dispatch(toggleIsFetching(true));
-  usersAPI.getUsers(currentPage, pageSize).then((data) => {
+  let data = await usersAPI.getUsers(currentPage, pageSize);
     dispatch(toggleIsFetching(false));
     dispatch(setUsers(data.items));
-  });
 };
-export const follow = (userId) => (dispatch) => {
+
+const following = async (userId, dispatch, apiMethod, actionCreator ) => { 
   dispatch(toggleFolowingProgress(true, userId));
-  followAPI.follow(userId).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(followSuccess(userId));
-    }
-    dispatch(toggleFolowingProgress(false, userId));
-  });
+  let data = await apiMethod(userId)
+  if (data.resultCode === 0) {
+    dispatch(actionCreator(userId));
+  }
+  dispatch(toggleFolowingProgress(false, userId));
+}
+
+export const follow = (userId) => async (dispatch) => {
+  following(userId, dispatch, followAPI.follow, followSuccess)
 };
-export const unFollow = (userId) => (dispatch) => {
-  dispatch(toggleFolowingProgress(true, userId));
-  followAPI.unFollow(userId).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(unFollowSuccess(userId));
-    }
-    dispatch(toggleFolowingProgress(false, userId));
-  });
+
+export const unFollow = (userId) => async (dispatch) => {
+  following(userId, dispatch, followAPI.unFollow, unFollowSuccess)
 };
 
 export default usersReducer;

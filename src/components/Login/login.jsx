@@ -1,27 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import {loginUser} from '../../Redux/auth-reducer'
 import { required } from '../../utils/validator'
-import { Input } from '../common/FormsControls/FormsControls'
+import { createField, Input } from '../common/FormsControls/FormsControls'
 import style from '../common/FormsControls/FormsControls.module.css'
 
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field placeholder={'Login'} validate={[required]} name={'login'} component={Input} />
+        <form onSubmit={handleSubmit}>
+            {createField('Login', [required], 'login', Input)}
+            {createField('Password', [required], 'password', Input, {type:'password'})}
+            <div className={error?style.formError:''}>
+                {error}
             </div>
-            <div>
-                <Field placeholder={'Password'} validate={[required]} name={'password'} component={Input}/>
-            </div>
-            <div className={props.error?style.formError:''}>
-                {props.error}
-            </div>
-            <div>
-                <Field type={'checkbox'} name={'rememberMe'} component={Input}/>remember me
-            </div>
+            {createField(null, [], 'rememberMe', Input, {type:'checkbox'}, 'remember me')}
             <div>
                 <button>Login</button>
             </div>
@@ -30,11 +24,11 @@ const LoginForm = (props) => {
 }
 const LogiReduxForm = reduxForm({form: 'login'})(LoginForm)
 
-const Login = (props) => {
+const Login = ({ loginUser, isAuth }) => {
     const onSubmit = (formData) => {
-        props.loginUser(formData)
+        loginUser(formData)
     }
-    if(props.isAuth) return <Redirect to={'/profile'}/>
+    if(isAuth) return <Redirect to={'/profile'}/>
     return <div>
         <h1>Login</h1>
         <LogiReduxForm onSubmit={onSubmit}/>
