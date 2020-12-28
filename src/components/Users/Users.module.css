@@ -15,4 +15,15 @@
     border-radius: 15px;
     margin-left: 10px;
 }
+.preloader{
+    display: none;
+    position: absolute;
+    left: 40%;
+}
+.preloaderOn{
+    display: inline-block;
+}
+.paginator{
+    text-align:center;
+}
 
