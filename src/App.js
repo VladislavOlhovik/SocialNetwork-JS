@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { Nav } from './components/Navbar/Nav';
-import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { Route } from 'react-router-dom';
 import Setting from './components/Setting/Setting';
 import Music from './components/Music/Music';
@@ -15,6 +14,8 @@ import { connect } from 'react-redux';
 import { initializeApp } from './Redux/app-reducer';
 import Preloader from './components/common/preloader/Preloader';
 import Chat from './components/Chat/Chat';
+import WithSuspense from './hoc/WithSuspense';
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
 
 
@@ -33,7 +34,7 @@ class App extends React.Component {
         <Nav />
         <div className="app-wrapper-content">
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-          <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/dialogs" render={ WithSuspense(DialogsContainer) } />
           <Route path="/chat" render={() => <Chat />} />
           <Route path="/users" render={() => <UsersContainer />} />
           <Route path="/news" component={News} />
