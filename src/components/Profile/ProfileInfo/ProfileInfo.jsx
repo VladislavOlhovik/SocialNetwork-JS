@@ -7,20 +7,23 @@ import ProfileStatusWithHook from './ProfileStatusWithHook';
 
 
 export const ProfileInfo = (props) => {
+  const sendFile = (e) => {
+    if(e.target.files.length){
+      props.savePhoto(e.target.files[0])
+    }
+  }
   if(!props.profile){
     return <Preloader/>
   }
   return (
     <div>
-      {/* <div>
-        <img className={s.img} src="https://gadgetmedics.com/wp-content/uploads/2020/01/illustration-geiranger.jpg" alt='img' />
-      </div> */}
       <div className={s.descriptionBlock}>
         <div className={s.wrapper}>
           <span>
             <div>
-              <img src={props.profile.photos.large ? props.profile.photos.large : userPhoto} alt="users" className={s.usersPhoto} />
+              <img src={props.profile.photos.large || userPhoto} alt="users" className={s.usersPhoto} />
             </div>
+            {props.isOwner && <input type='file' onChange={sendFile}/>}
           </span>
           <span className={s.content}>
             <span>
@@ -29,7 +32,7 @@ export const ProfileInfo = (props) => {
             </span>
           </span>
         </div>
-        <ProfileStatusWithHook status = {props.status} updateUserStatus={props.updateUserStatus}/>
+        <ProfileStatusWithHook isOwner = {props.isOwner} status = {props.status} updateUserStatus={props.updateUserStatus}/>
       </div>
     </div>
   )

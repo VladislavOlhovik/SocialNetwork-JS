@@ -15,9 +15,7 @@ const User = ({
             <span>
                 <div>
                     <NavLink to={'/profile/' + user.id}>
-                        <img src={user.photos.small 
-                            ? user.photos.small 
-                            : userPhoto} alt="users" className={styles.usersPhoto} />
+                        <img src={user.photos.small || userPhoto} alt="users" className={styles.usersPhoto} />
                     </NavLink>
                 </div>
                 <div>
