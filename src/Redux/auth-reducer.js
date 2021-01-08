@@ -1,7 +1,8 @@
 import { stopSubmit } from "redux-form";
-import { authAPI } from "../api/api";
+import { authAPI, securityAPI } from "../api/api";
 
 const SET_USERS_DATA = "auth/SET_USERS_DATA";
+const SET_CAPTCHA_URL = "auth/SET_CAPTCHA_URL";
 
 
 const initialState = {
@@ -9,11 +10,13 @@ const initialState = {
     login:null,
     email:null,
     isAuth:false,
+    captchaUrl:null,
 }
 
 export const authReducer = (state=initialState, action) => {
   switch (action.type) {
     case SET_USERS_DATA:
+    case SET_CAPTCHA_URL:
       return {
         ...state,
         ...action.payload,
@@ -24,6 +27,7 @@ export const authReducer = (state=initialState, action) => {
 };
 
 export const setAuthUserData = (data, isAuth) => ({ type: SET_USERS_DATA, payload:{...data, isAuth} });
+export const setCaptchaUrl = (captchaUrl) => ({ type: SET_CAPTCHA_URL, payload:{captchaUrl} });
 
 export const getAuthUserData = () => async (dispatch) => {
   let data = await authAPI.getMe();
@@ -31,11 +35,19 @@ export const getAuthUserData = () => async (dispatch) => {
     dispatch(setAuthUserData(data.data, true));
   }
 };
+const getCaptchaUrl = () => async (dispatch) => {
+  let data = await securityAPI.getCaptchaUrl()
+  dispatch(setCaptchaUrl(data.data.url))
+}
 export const loginUser = (formData) => async (dispatch) => {
-  let data = await authAPI.login(formData.login, formData.password, formData.rememberMe)
+  let data = await authAPI.login(formData.login, formData.password, formData.rememberMe, formData.captcha)
     if (data.data.resultCode === 0) {
       dispatch(getAuthUserData());
+      dispatch(setCaptchaUrl(null))
     } else {
+      if(data.data.resultCode === 10){
+        dispatch(getCaptchaUrl())
+      }
       let message =
         data.data.messages.length > 0 ? data.data.messages[0] : "Some error";
       dispatch(stopSubmit("login", { _error: message }));
