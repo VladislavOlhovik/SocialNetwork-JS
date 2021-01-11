@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useRef } from 'react'
 import userPhoto from '../../assets/images/user.png'
 import { useSelector } from 'react-redux'
+import { WithAuthRedirect } from '../../hoc/WithAuthRedirect'
 
 
 const Chat = () => {
@@ -64,4 +65,4 @@ const Chat = () => {
     )
 }
 
-export default Chat
+export default WithAuthRedirect(Chat)

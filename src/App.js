@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Nav } from './components/Navbar/Nav';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import Setting from './components/Setting/Setting';
 import Music from './components/Music/Music';
 import News from './components/News/News';
@@ -33,6 +33,7 @@ class App extends React.Component {
         <HeaderContainer />
         <Nav />
         <div className="app-wrapper-content">
+          <Redirect from='/' to='/profile'/>
           <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
           <Route path="/dialogs" render={ WithSuspense(DialogsContainer) } />
           <Route path="/chat" render={() => <Chat />} />
