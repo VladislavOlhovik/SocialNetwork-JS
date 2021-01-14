@@ -3,6 +3,7 @@ import { addMessageActionCreator } from '../../Redux/dialogs-reducer';
 import { connect } from 'react-redux';
 import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
 import { compose } from 'redux';
+import { reset } from 'redux-form';
 
 const mapStateToProps = (state)=>{
     return{
@@ -12,6 +13,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=>{
     return{
         addMessage: (newMessageBody)=>dispatch(addMessageActionCreator(newMessageBody)),
+        clearForm: ()=>dispatch(reset('dialogAddMassage')),
     }
 }
 

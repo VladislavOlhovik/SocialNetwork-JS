@@ -5,10 +5,13 @@ import s from './Header.module.css';
 export const Header = (props) => {
   return (
     <header className={s.header}>
-      <img src="https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg" alt='img' />
+      <span>SocialNetwork</span>
       <div className={s.loginBlock}>
         {props.isAuth 
-        ? <div>{props.login} - <button onClick={props.logoutUser}>Log out</button> </div>
+        ? <div> 
+          {props.profile&&<img src={props.profile.photos.small} alt="logo"/>}
+          {props.login}  <button onClick={props.logoutUser}>Log out</button>
+          </div>
         : <NavLink to={'/login'}>login</NavLink>}
       </div>
     </header>

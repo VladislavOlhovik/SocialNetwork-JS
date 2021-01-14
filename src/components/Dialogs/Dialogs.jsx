@@ -11,6 +11,7 @@ let dialogsElements = props.dialogsPage.dialogsData.map(el => <DialogItem key={e
 let messagesElement = props.dialogsPage.messagesData.map(el => <Message key={el.id} message={el.message} />)
 const addMessage=(dataForm)=>{
     props.addMessage(dataForm.newMessageBody)
+    props.clearForm()
 }
     return (
         <div className={s.dialogs}>

@@ -12,6 +12,7 @@ export const MyPost = (props) => {
   
   let addPost=(dataForm) => {
     props.addPost(dataForm.newPost)
+    props.clearForm()
   }
   return (
     <div className={s.postsBlock}>

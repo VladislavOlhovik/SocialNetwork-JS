@@ -1,13 +1,50 @@
-.header{
+.header {
     grid-area: header;
-    background-color: darkgreen;
+    background-color: #4a76a8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.header img{
-    width: 80px;
+
+.header span {
+    color: #d3cfd0;
+    font-size: xx-large;
+    padding: 8px;
 }
+
 .loginBlock{
-    float: right;
+    padding-right: 10px;
 }
+
+.loginBlock button {
+    padding: 6px 10px 5px 10px;
+    border-radius: 10%;
+    border: none;
+    background-color: #80A8CC;
+    color: #FFFBF5;
+    outline: none;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.loginBlock div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #d3cfd0;
+}
+
 .loginBlock a {
-    color: aliceblue;
+    padding: 1px 10px 3px 10px;
+    border-radius: 10%;
+    background-color: #80A8CC;
+    color: #FFFBF5;
+    text-decoration: none;
+}
+
+.loginBlock img {
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    margin-right: 10px;
 }
