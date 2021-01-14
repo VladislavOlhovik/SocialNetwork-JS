@@ -39,8 +39,8 @@ export const Input = FormsControls('input')
 export const Textarea = FormsControls('textarea')
 
  export const createField = ( placeholder, validate, name, component, props={}, text='' ) => (
-    <div>
+    <div style={{display:'flex',padding:'5px 0'}}>
          <Field placeholder={placeholder} validate={validate} name={name} component={component} {...props} />
-         {text}
+         <span>{text}</span>
     </div>
 )

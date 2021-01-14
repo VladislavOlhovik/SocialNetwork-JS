@@ -1,10 +1,13 @@
-.postsBlock{
-    padding: 10px;
+
+.wrapper .contactBloc{
+    display: flex;
 }
-.posts{
-    margin-top: 10px;
+.wrapper .contactBloc .icon div a{
+    font-size: 40px;
+    color: #4a76a8;
+    padding: 0 5px;
 }
-.btn{
+.wrapper button{
     padding: 6px 10px 5px 10px;
     border-radius: 10%;
     border: none;

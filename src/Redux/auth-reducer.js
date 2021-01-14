@@ -1,8 +1,9 @@
 import { stopSubmit } from "redux-form";
-import { authAPI, securityAPI } from "../api/api";
+import { authAPI, profileAPI, securityAPI } from "../api/api";
 
 const SET_USERS_DATA = "auth/SET_USERS_DATA";
 const SET_CAPTCHA_URL = "auth/SET_CAPTCHA_URL";
+const SET_PHOTOS = "auth/SET_PHOTOS";
 
 
 const initialState = {
@@ -11,6 +12,10 @@ const initialState = {
     email:null,
     isAuth:false,
     captchaUrl:null,
+    photos:{
+      small:null,
+      large:null
+    }
 }
 
 export const authReducer = (state=initialState, action) => {
@@ -21,18 +26,26 @@ export const authReducer = (state=initialState, action) => {
         ...state,
         ...action.payload,
       }
+    case SET_PHOTOS:
+      return{
+        ...state,
+        photos:{...action.payload}
+      }
     default:
       return state;
   }
 };
 
 export const setAuthUserData = (data, isAuth) => ({ type: SET_USERS_DATA, payload:{...data, isAuth} });
+export const setPhotos = (data) => ({ type: SET_PHOTOS, payload:{...data} });
 export const setCaptchaUrl = (captchaUrl) => ({ type: SET_CAPTCHA_URL, payload:{captchaUrl} });
 
 export const getAuthUserData = () => async (dispatch) => {
   let data = await authAPI.getMe();
   if (data.resultCode === 0) {
     dispatch(setAuthUserData(data.data, true));
+    let me = await profileAPI.getProfile(data.data.id);
+    dispatch(setPhotos(me.data.photos))
   }
 };
 const getCaptchaUrl = () => async (dispatch) => {

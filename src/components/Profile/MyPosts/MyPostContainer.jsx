@@ -5,7 +5,8 @@ import { MyPost } from './MyPost';
 
 const mapStateToProps = (state)=>{
   return{
-    postdata: state.profilePage.postData
+    postdata: state.profilePage.postData,
+    profile: state.profilePage.profile,
   }
 }
 const mapDispatchToProps = (dispatch)=>{

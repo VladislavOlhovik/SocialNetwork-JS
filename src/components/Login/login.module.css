@@ -1,8 +1,6 @@
-.postsBlock{
-    padding: 10px;
-}
-.posts{
-    margin-top: 10px;
+.wrapper{
+    margin: 20px 40px;
+    width: 300px;
 }
 .btn{
     padding: 6px 10px 5px 10px;

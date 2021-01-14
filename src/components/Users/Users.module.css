@@ -1,18 +1,16 @@
 .wrapper{
     display: flex;
+    align-items: center;
+    padding: 10px;
     margin: 1%;
+    border: 2px solid #ece8e2;
+
 }
 .usersPhoto{
-    width: 55px;
-    height: 55px;
-    border-radius: 40px;
+    width: 90px;
+    height: 90px;
 }
-.content{
-    display: flex;
-    width: 30%;
-    justify-content: space-around;
-    border: black solid 1px;
-    border-radius: 15px;
+.content{ 
     margin-left: 10px;
 }
 .preloader{
@@ -24,6 +22,15 @@
     display: inline-block;
 }
 .paginator{
-    text-align:center;
+    /* text-align:center; */
+    padding-top: 10px;
 }
-
+.btn button{
+    padding: 6px 10px 5px 10px;
+    border-radius: 10%;
+    border: none;
+    background-color: #80A8CC;
+    color: #FFFBF5;
+    outline: none;
+    cursor: pointer;
+}

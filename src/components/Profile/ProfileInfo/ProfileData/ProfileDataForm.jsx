@@ -1,11 +1,13 @@
 import React from 'react'
 import { reduxForm } from 'redux-form'
-import { createField, Input, Textarea } from '../../common/FormsControls/FormsControls'
-import style from '../../common/FormsControls/FormsControls.module.css'
+import { createField, Input, Textarea } from '../../../common/FormsControls/FormsControls'
+import style from '../../../common/FormsControls/FormsControls.module.css'
+import s from './ProfileData.module.css'
+
 
 const ProfileForm = ({profile, handleSubmit, error}) => {
     return(
-      <form onSubmit={handleSubmit}>
+      <form className={s.wrapper} onSubmit={handleSubmit}>
         <div>
           <b>full Name: </b>{createField('full Name', [], 'fullName', Input)}
         </div>

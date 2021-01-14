@@ -4,11 +4,21 @@ import { maxLengthCreator, required } from '../../../utils/validator';
 import { Textarea } from '../../common/FormsControls/FormsControls';
 import s from './MyPost.module.css';
 import { Post } from './Post/Post';
+import img from '../../../assets/images/user.png'
+import Preloader from '../../common/preloader/Preloader';
+
 
 const maxLength = maxLengthCreator(10)
 
 export const MyPost = (props) => {
-  let postElements=props.postdata.map(el => <Post key={el.id} message={el.message} likeCounts={el.likeCounts} />)
+  if (!props.profile) {
+    return <Preloader />
+  }
+  let postElements=props.postdata.map(el => (
+    <Post key={el.id} 
+          photosSmall={props.profile.photos.small||img} 
+          message={el.message} likeCounts={el.likeCounts} />
+  ))
   
   let addPost=(dataForm) => {
     props.addPost(dataForm.newPost)
@@ -35,7 +45,7 @@ const PostForm = (props) => {
                placeholder={'Enter your New post'}/>
       </div>
       <div>
-        <button>Add post</button>
+        <button className={s.btn}>Add post</button>
       </div>
     </form>
   )

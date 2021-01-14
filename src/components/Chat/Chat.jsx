@@ -6,6 +6,7 @@ import { useRef } from 'react'
 import userPhoto from '../../assets/images/user.png'
 import { useSelector } from 'react-redux'
 import { WithAuthRedirect } from '../../hoc/WithAuthRedirect'
+import { NavLink } from 'react-router-dom'
 
 
 const Chat = () => {
@@ -13,7 +14,7 @@ const Chat = () => {
     const [message, setMessage] = useState('')
     const [messages, setMessages] = useState([])
     const [socket, setSocket] = useState(null)
-    const userID = useSelector(state=>state.auth.id)
+    const userID = useSelector(state => state.auth.id)
 
     useEffect(() => {
         const socket = new WebSocket('wss://social-network.samuraijs.com/handlers/chatHandler.ashx')
@@ -26,7 +27,8 @@ const Chat = () => {
     if (socket) {
         socket.onmessage = function (event) {
             setMessages([...messages, ...JSON.parse(event.data)])
-            messagesBlockRef.current && messagesBlockRef.current.scrollTo(0, messagesBlockRef.current.scrollHeight)
+            messagesBlockRef.current &&
+                messagesBlockRef.current.scrollTo(0, messagesBlockRef.current.scrollHeight)
         }
     }
     const onChangeHandler = (e) => {
@@ -38,16 +40,23 @@ const Chat = () => {
             setMessage('')
         }
     }
+    const onKeyPressHandler = (event) => {
+        if(event.ctrlKey&&event.charCode===13){
+            sendMessage()
+        }
+    }
 
     return (
-        <div>
-            <h3 className={s.header}>Chat</h3>
+        <div className={s.block}>
+            <h3>Chat</h3>
             <div className={s.messages} ref={messagesBlockRef}>
                 {messages.map((m, i) => {
                     return (
-                        <div key={i} className={`${s.wrapper} ${m.userId===userID?s.myMessage:''}`}>
-                            <img src={m.photo?m.photo:userPhoto} alt="avatar" />
-                            <div className={`${m.userId===userID?s.mySpeechbubble:s.speechbubble}`}>
+                        <div key={i} className={`${s.wrapper} ${m.userId === userID ? s.myMessage : ''}`}>
+                            <NavLink to={'/profile/' + m.userId}>
+                                <img src={m.photo ? m.photo : userPhoto} alt="avatar" />
+                            </NavLink>
+                            <div className={`${m.userId === userID ? s.mySpeechbubble : s.speechbubble}`}>
                                 <div className={s.name}>
                                     <div>{m.userName}</div>
                                 </div>
@@ -58,7 +67,9 @@ const Chat = () => {
                 })}
             </div>
             <div className={s.inputss}>
-                <input value={message} onChange={onChangeHandler} />
+                <textarea placeholder='Enter your message...' 
+                          value={message} onKeyPress={onKeyPressHandler} 
+                          onChange={onChangeHandler} />
                 <button onClick={sendMessage}>SEND</button>
             </div>
         </div>
