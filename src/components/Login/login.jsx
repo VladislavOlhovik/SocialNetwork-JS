@@ -34,13 +34,17 @@ const Login = ({ loginUser, isAuth, captchaUrl }) => {
     if (isAuth) return <Redirect to={'/profile'} />
     return <div className={s.wrapper}>
         <div>
-            To log in get registeredhere
+            To log in get registered
+            <a href={"https://social-network.samuraijs.com/"}
+                target={"blank"}>
+                -here-
+            </a>
             or use common test account credentials:
             <div>
-            <b>Email: </b> free@samuraijs.com
+                <b>Email: </b> free@samuraijs.com
             </div>
             <div>
-            <b>Password: </b>free
+                <b>Password: </b>free
             </div>
         </div>
         <h1>Login</h1>
