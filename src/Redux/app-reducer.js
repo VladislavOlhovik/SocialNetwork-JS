@@ -1,4 +1,4 @@
-import { getAuthUserData } from "../Redux/auth-reducer";
+import { put, takeEvery } from "redux-saga/effects";
 
 const INITIALIZED_SUCCESS = "app/INITIALIZED_SUCCESS";
 
@@ -20,12 +20,15 @@ export const appReducer = (state=initialState, action) => {
 
 export const initializedSuccess = () => ({ type: INITIALIZED_SUCCESS });
 
-export const initializeApp = () => (dispatch) => {
-  let promis = dispatch(getAuthUserData())
-  Promise.all([promis]).then(()=>{
-    dispatch(initializedSuccess())
-  })
+function* initializeAppS () {
+  yield put(initializedSuccess())
 };
 
+
+export function* appListener () { 
+  yield takeEvery('app/InitializeApp', initializeAppS)
+}
+
+export const initializeApp = () => ({type:'app/InitializeApp'})
 
 export default appReducer;

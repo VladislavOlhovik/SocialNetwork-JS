@@ -11,7 +11,7 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/login';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { initializeApp } from './Redux/app-reducer';
+import { getAuthUserData } from './Redux/auth-reducer';
 import Preloader from './components/common/preloader/Preloader';
 import Chat from './components/Chat/Chat';
 import WithSuspense from './hoc/WithSuspense';
@@ -22,7 +22,7 @@ const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsCo
 
 class App extends React.Component {
   componentDidMount() {
-    this.props.initializeApp()
+    this.props.getAuthUserData()
   }
   render() {
     if (!this.props.initialized) {
@@ -52,5 +52,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default compose(
-  connect(mapStateToProps, { initializeApp } )
+  connect(mapStateToProps, { getAuthUserData } )
 )(App);

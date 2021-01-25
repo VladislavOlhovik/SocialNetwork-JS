@@ -32,8 +32,9 @@ class ProfileContainer extends React.Component {
     return (
       <div>
         <Profile profile={this.props.profile}
-                 isOwner={!this.props.match.params.userId}
+                 isOwner={!!this.props.userID&&!this.props.match.params.userId}
                  status = {this.props.status}
+                 toggleEditMode = {this.props.toggleEditMode}
                  savePhoto={this.props.savePhoto}
                  saveProfile={this.props.saveProfile}
                  updateUserStatus={this.props.updateUserStatus} />
@@ -46,6 +47,7 @@ const mapStateToProps = (state) => {
     profile: state.profilePage.profile,
     userID: state.auth.id,
     status: state.profilePage.status,
+    toggleEditMode: state.profilePage.toggleEditMode,
   }
 }
 

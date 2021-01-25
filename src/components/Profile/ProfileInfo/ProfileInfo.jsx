@@ -8,7 +8,15 @@ import { ProfileData } from './ProfileData/ProfileData';
 
 
 
-export const ProfileInfo = ({ savePhoto, profile, isOwner, status, updateUserStatus, saveProfile }) => {
+export const ProfileInfo = ({ 
+  toggleEditMode, 
+  savePhoto, 
+  profile, 
+  isOwner, 
+  status, 
+  updateUserStatus, 
+  saveProfile 
+}) => {
   const [editMode, setEditMode] = useState(false)
   const sendFile = (e) => {
     if (e.target.files.length) {
@@ -16,9 +24,8 @@ export const ProfileInfo = ({ savePhoto, profile, isOwner, status, updateUserSta
     }
   }
   const onSubmit = (formData) => {
-    saveProfile(formData).then(() => {
-      setEditMode(false)
-    })
+    saveProfile(formData)
+    toggleEditMode&&setEditMode(false)
   }
   if (!profile) {
     return <Preloader />

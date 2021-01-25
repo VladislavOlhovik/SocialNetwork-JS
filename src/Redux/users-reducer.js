@@ -1,3 +1,4 @@
+import { call, put, takeEvery } from "redux-saga/effects";
 import { followAPI, usersAPI } from "../api/api";
 import { updateObjectInArray } from "../utils/object-helpers";
 
@@ -58,36 +59,51 @@ export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_C
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});
 export const toggleFolowingProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, payload:{isFetching,userId}});
 
-export const requestUsers = (currentPage, pageSize) => async (dispatch) => {
-  dispatch(toggleIsFetching(true));
-  let data = await usersAPI.getUsers(currentPage, pageSize)
-  dispatch(setUsers(data.items));
-  dispatch(setTotalUsersCount(data.totalCount));
-  dispatch(toggleIsFetching(false));
-};
-export const getUsersCurrentPage = (currentPage, pageSize) => async (dispatch) => {
-  dispatch(setCurrentPage(currentPage));
-  dispatch(toggleIsFetching(true));
-  let data = await usersAPI.getUsers(currentPage, pageSize);
-    dispatch(toggleIsFetching(false));
-    dispatch(setUsers(data.items));
+function* requestUsersS ({payload}) {
+  yield put(toggleIsFetching(true));
+  let data = yield call(usersAPI.getUsers,payload.currentPage, payload.pageSize)
+  yield put(setUsers(data.items));
+  yield put(setTotalUsersCount(data.totalCount));
+  yield put(toggleIsFetching(false));
 };
 
-const following = async (userId, dispatch, apiMethod, actionCreator ) => { 
-  dispatch(toggleFolowingProgress(true, userId));
-  let data = await apiMethod(userId)
+function* getUsersCurrentPageS ({payload}) {
+  yield put(setCurrentPage(payload.currentPage));
+  yield put(toggleIsFetching(true));
+  let data = yield call(usersAPI.getUsers, payload.currentPage, payload.pageSize);
+  yield put(toggleIsFetching(false));
+  yield put(setUsers(data.items));
+};
+
+function* followingS ({payload} ) { 
+  yield put(toggleFolowingProgress(true, payload.userId));
+  let data = yield call(payload.API, payload.userId)
   if (data.resultCode === 0) {
-    dispatch(actionCreator(userId));
+    yield put(payload.AC(payload.userId));
   }
-  dispatch(toggleFolowingProgress(false, userId));
+  yield put(toggleFolowingProgress(false, payload.userId));
 }
 
-export const follow = (userId) => async (dispatch) => {
-  following(userId, dispatch, followAPI.follow, followSuccess)
-};
+export function* usersListener () { 
+  yield takeEvery('users/RequestUsers', requestUsersS)
+  yield takeEvery('users/GetUsersCurrentPage', getUsersCurrentPageS)
+  yield takeEvery('users/Following', followingS)
+}
 
-export const unFollow = (userId) => async (dispatch) => {
-  following(userId, dispatch, followAPI.unFollow, unFollowSuccess)
-};
+
+export const requestUsers = (currentPage, pageSize) => ({type:'users/RequestUsers',payload:{currentPage,pageSize}})
+export const getUsersCurrentPage = (currentPage, pageSize) => ({type:'users/GetUsersCurrentPage',payload:{currentPage, pageSize}})
+
+export const follow = (userId) => ({type:'users/Following', payload:{
+  userId:userId, 
+  API: followAPI.follow, 
+  AC: followSuccess
+}})
+
+export const unFollow = (userId) => ({type:'users/Following', payload:{
+  userId:userId, 
+  API: followAPI.unFollow, 
+  AC: unFollowSuccess
+}})
 
 export default usersReducer;

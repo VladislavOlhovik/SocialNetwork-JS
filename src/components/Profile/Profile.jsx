@@ -8,6 +8,7 @@ export const Profile = (props) =>{
         <div>
           <ProfileInfo profile = {props.profile}
                        status = {props.status}
+                       toggleEditMode = {props.toggleEditMode}
                        isOwner = {props.isOwner}
                        savePhoto={props.savePhoto}
                        saveProfile={props.saveProfile}

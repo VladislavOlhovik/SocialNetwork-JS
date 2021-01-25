@@ -11,7 +11,7 @@ import s from './login.module.css'
 const LoginForm = ({ handleSubmit, error, captchaUrl }) => {
     return (
         <form onSubmit={handleSubmit}>
-            {createField('Login', [required], 'login', Input)}
+            {createField('Login', [required], 'email', Input)}
             {createField('Password', [required], 'password', Input, { type: 'password' })}
             <div className={error ? style.formError : ''}>
                 {error}
