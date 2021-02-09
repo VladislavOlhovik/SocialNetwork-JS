@@ -20,7 +20,7 @@ export const appReducer = (state=initialState, action) => {
 
 export const initializedSuccess = () => ({ type: INITIALIZED_SUCCESS });
 
-function* initializeAppS () {
+export function* initializeAppS () {
   yield put(initializedSuccess())
 };
 

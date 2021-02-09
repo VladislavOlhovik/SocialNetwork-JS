@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Preloader from '../../common/preloader/Preloader';
 import s from './ProfileInfo.module.css';
 import userPhoto from '../../../assets/images/user.png'
 import ProfileStatusWithHook from './ProfileStatus/ProfileStatusWithHook';
 import ProfileDataForm from './ProfileData/ProfileDataForm';
 import { ProfileData } from './ProfileData/ProfileData';
+import { useDispatch } from 'react-redux';
 
 
 
@@ -15,9 +16,10 @@ export const ProfileInfo = ({
   isOwner, 
   status, 
   updateUserStatus, 
-  saveProfile 
+  saveProfile,
+  changeToggleEditMode, 
 }) => {
-  const [editMode, setEditMode] = useState(false)
+  const dispatch = useDispatch()
   const sendFile = (e) => {
     if (e.target.files.length) {
       savePhoto(e.target.files[0])
@@ -25,7 +27,9 @@ export const ProfileInfo = ({
   }
   const onSubmit = (formData) => {
     saveProfile(formData)
-    toggleEditMode&&setEditMode(false)
+  }
+  const goToEditMode = () => {
+    dispatch(changeToggleEditMode(true))
   }
   if (!profile) {
     return <Preloader />
@@ -51,9 +55,9 @@ export const ProfileInfo = ({
                 <ProfileStatusWithHook isOwner={isOwner} status={status} updateUserStatus={updateUserStatus} />
               </div>
               <div>
-                {editMode
+                {toggleEditMode
                   ? <ProfileDataForm initialValues={profile} profile={profile} onSubmit={onSubmit} />
-                  : <ProfileData goToEditMode={() => setEditMode(true)} isOwner={isOwner} profile={profile} />}
+                  : <ProfileData goToEditMode={goToEditMode} isOwner={isOwner} profile={profile} />}
               </div>
             </span>
           </div>

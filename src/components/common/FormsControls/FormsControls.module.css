@@ -1,14 +1,14 @@
 .error input,
 .error textarea{
-    border: solid red 4px;
+    border: solid #dc0e0e 4px;
 }
 
 .error span{
-    color: red;
+    color: #dc0e0e;
 }
 .formError{
-    border: solid red 3px;
+    border: solid #dc0e0e 3px;
     border-radius: 6px;
-    color: red;
+    color: #dc0e0e;
     width: 160px;
 }

@@ -1,7 +1,7 @@
 import { stopSubmit } from "redux-form";
 import { authAPI, profileAPI, securityAPI } from "../api/api";
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { initializeApp } from "./app-reducer";
+import { initializeAppS } from "./app-reducer";
 
 
 const SET_USERS_DATA = "auth/SET_USERS_DATA";
@@ -55,7 +55,7 @@ function* getAuthUserDataS() {
   } catch (e) {
     console.log("err", e);
   }
-  yield put(initializeApp())
+  yield* initializeAppS()
 }
 
 function* getCaptchaUrlS(){

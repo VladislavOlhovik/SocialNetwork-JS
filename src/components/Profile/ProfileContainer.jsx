@@ -1,7 +1,7 @@
 import React from 'react';
 import { Profile } from './Profile';
 import { connect } from 'react-redux';
-import { getUserProfile, getUserStatus, updateUserStatus, savePhoto, saveProfile } from '../../Redux/profile-reducer'
+import { getUserProfile, getUserStatus, changeToggleEditMode, updateUserStatus, savePhoto, saveProfile } from '../../Redux/profile-reducer'
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
@@ -37,6 +37,7 @@ class ProfileContainer extends React.Component {
                  toggleEditMode = {this.props.toggleEditMode}
                  savePhoto={this.props.savePhoto}
                  saveProfile={this.props.saveProfile}
+                 changeToggleEditMode={this.props.changeToggleEditMode}
                  updateUserStatus={this.props.updateUserStatus} />
       </div>
     )
@@ -52,6 +53,12 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-  connect(mapStateToProps, { getUserProfile, getUserStatus, updateUserStatus, savePhoto, saveProfile }),
+  connect(mapStateToProps, { 
+    getUserProfile, 
+    getUserStatus, 
+    updateUserStatus, 
+    savePhoto, 
+    changeToggleEditMode,
+    saveProfile }),
   withRouter,
 )(ProfileContainer)

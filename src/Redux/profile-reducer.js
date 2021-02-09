@@ -49,6 +49,7 @@ export const addPostActionCreator = (newPostText) => ({ type: ADD_POST, newPostT
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const setStatus = (status) => ({ type: SET_STATUS, status });
 export const setPhotos = (photos) => ({ type: SET_PHOTO, photos });
+export const changeToggleEditMode = (toggleEditMode) => ({ type: CHANGE_TOGGLE_EDIT_MODE, toggleEditMode });
 
 function* getUserProfileS ({userId}) {
   if(userId){
@@ -75,11 +76,10 @@ function* savePhotoS ({file}) {
   }
 };
 function* saveProfileS ({formData}) {
-  yield put({type:CHANGE_TOGGLE_EDIT_MODE, toggleEditMode: false})
   let respons = yield call(profileAPI.updateProfile, formData)
     if(respons.data.resultCode===0){
       yield put(getUserProfile(formData.userId))
-      yield put({type:CHANGE_TOGGLE_EDIT_MODE, toggleEditMode: true})
+      yield put(changeToggleEditMode(false))
     } else {
       let message =
       respons.data.messages.length > 0 ? respons.data.messages[0] : "Some error";
